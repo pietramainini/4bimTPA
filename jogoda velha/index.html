@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Velha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    .cell:hover {
+      background: #333;
+    }
+
+    .cell.x {
+      color: #AAC4F5; 
+    }
+
+    .cell.o {
+      color: #FF8FB7
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jogo da Velha</h1>
+
+  <div id="board"></div>
+
+  <div id="status">vezes jogadas...</div>
+  <button onclick="resetGame()">Reiniciar</button>
+
+  <script>
+    const board = document.getElementById("board");
+    const statusText = document.getElementById("status");
+
+    let currentPlayer = "X";
+    let gameActive = true;
+
+    // Criar células
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.dataset.index = i;
+      cell.addEventListener("click", () => handleMove(i));
+      board.appendChild(cell);
+    }
+
+    function handleMove(index) {
+      if (!gameActive) return;
+      const cell = document.querySelector(`[data-index='${index}']`);
+      if (cell.textContent !== "") return;
+
+      // Jogada
+      cell.textContent = currentPlayer;
+
+      if (currentPlayer === "X") {
+        cell.classList.add("x");
+      } else {
+        cell.classList.add("o");
+      }
+
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      statusText.textContent = `Vez do jogador ${currentPlayer}`;
+    }
+
+    function resetGame() {
+      document.querySelectorAll(".cell").forEach(cell => {
+        cell.textContent = "";
+        cell.classList.remove("x", "o"); // remove cores
+      });
+
+      currentPlayer = "X";
+      gameActive = true;
+      statusText.textContent = "Jogo reiniciado";
+    }
+  </script>
+   
+</body>
+</html>
