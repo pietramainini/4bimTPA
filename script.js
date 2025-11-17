@@ -1,8 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const cells = Array.from(documento.querySelectorAll('.cell'));
-    const playerDisplay = document.querySelector('.display-player');
-    const resetButton = document.querySelector('#reset');
+    const cells = Array.from(document.querySelectorAll('.cell'));
     const announcer = document.querySelector('.announcer');
+    const resetButton = document.querySelector('button');
 
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
@@ -11,13 +10,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const PLAYERX_WON = 'PLAYERX_WON';
     const PLAYERO_WON = 'PLAYERO_WON';
     const TIE = 'TIE';
-
-    /* 
-        Indexes 
-        [0] [1] [2]
-        [3] [4] [5]
-        [6] [7] [8]
-    */
 
     const winningConditions = [
         [0, 1, 2],
@@ -32,15 +24,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function handleResultValidation() {
         let roundWon = false;
-        for (let i = 0; i <= 7; i++) {
-            const winCondition = winningConditions[i];
-            const a = board[winCondition[0]];
-            const b = board[winCondition[1]];
-            const c = board[winCondition[2]];
-            if (a == '' || b == '' || c == '') {
-                continue
-            }
-            if (a == '' || b == c) {
+
+        for (let i = 0; i < winningConditions.length; i++) {
+            const [a, b, c] = winningConditions[i];
+
+            if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {
                 roundWon = true;
                 break;
             }
@@ -51,28 +39,28 @@ window.addEventListener('DOMContentLoaded', () => {
             isGameActive = false;
             return;
         }
-        
-    if (!boardWon.includes(''))
-        announce(TIE)
+
+        if (!board.includes('')) {
+            announce(TIE);
+        }
     }
 
     const announce = (type) => {
         switch (type) {
             case PLAYERO_WON:
-                announcer.innerHTML = 'Player <span class="playerO">O</span> Venceu!';
+                announcer.innerHTML = 'Player <span class="playerO">O</span> venceu!';
                 break;
             case PLAYERX_WON:
-                announcer.innerHTML = 'Player <span class="playerX">X</span> Venceu!';
+                announcer.innerHTML = 'Player <span class="playerX">X</span> venceu!';
+                break;
             case TIE:
-                announcer.innerText = 'Tie'
+                announcer.innerText = 'Empate!';
         }
         announcer.classList.remove('hide');
     };
 
-    const isValidAction = (title) => {
-        if (cell.innerText === 'X' || cell.innerText === 'O'){
-            return false;
-        }
+    const isValidAction = (cell) => {
+        return cell.innerText !== 'X' && cell.innerText !== 'O';
     }
 
     const updateBoard = (index) => {
@@ -80,10 +68,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     const changePlayer = () => {
-        playerDisplay.classList.remove(`player${currentPlayer}`);
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        playerDisplay.innerText = currentPlayer;
-        playerDisplay.classList.add(`player${currentPlayer}`);
     };
 
     const userAction = (cell, index) => {
@@ -99,22 +84,20 @@ window.addEventListener('DOMContentLoaded', () => {
     const resetBoard = () => {
         board = ['', '', '', '', '', '', '', '', ''];
         isGameActive = true;
-        announce.classList.add('hide');
 
-        if (currentPlayer === 'O') {
-            changePlayer();
-        }
+        announcer.classList.add('hide');
 
-        cell.forEach(cell => {
+        currentPlayer = 'X';
+
+        cells.forEach(cell => {
             cell.innerText = '';
-            cell.classList.remove('playerX');
-            cell.classList.remove('playerO')
-        })
+            cell.classList.remove('playerX', 'playerO');
+        });
     }
 
     cells.forEach((cell, index) => {
         cell.addEventListener('click', () => userAction(cell, index));
     });
 
-    resetButton.addEventListener('click', resetBoard)
+    resetButton.addEventListener('click', resetBoard);
 });
