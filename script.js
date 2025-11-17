@@ -48,15 +48,18 @@ window.addEventListener('DOMContentLoaded', () => {
     const announce = (type) => {
         switch (type) {
             case PLAYERO_WON:
-                announcer.innerHTML = 'Player <span class="playerO">O</span> venceu!';
+                announcer.innerHTML = 'Jogador <span class="playerO">O</span> venceu!';
                 break;
             case PLAYERX_WON:
-                announcer.innerHTML = 'Player <span class="playerX">X</span> venceu!';
+                announcer.innerHTML = 'Jogador <span class="playerX">X</span> venceu!';
                 break;
             case TIE:
                 announcer.innerText = 'Empate!';
+                break;
         }
+
         announcer.classList.remove('hide');
+        announcer.classList.add('show');
     };
 
     const isValidAction = (cell) => {
@@ -86,6 +89,7 @@ window.addEventListener('DOMContentLoaded', () => {
         isGameActive = true;
 
         announcer.classList.add('hide');
+        announcer.classList.remove('show');
 
         currentPlayer = 'X';
 
@@ -93,7 +97,8 @@ window.addEventListener('DOMContentLoaded', () => {
             cell.innerText = '';
             cell.classList.remove('playerX', 'playerO');
         });
-    }
+    };
+
 
     cells.forEach((cell, index) => {
         cell.addEventListener('click', () => userAction(cell, index));

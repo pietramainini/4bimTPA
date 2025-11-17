@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: #111;
     color: #fff;
     display: flex;
@@ -8,6 +8,14 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+
+    background-image:
+        url("data:image/svg+xml;utf8,\
+        <svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'>\
+            <text x='10' y='25' font-size='30' fill='rgba(255,255,255,0.06)' font-family='sans-serif'>X</text>\
+            <text x='40' y='65' font-size='30' fill='rgba(255,255,255,0.06)' font-family='sans-serif'>O</text>\
+        </svg>");
+    background-size: 120px 120px;
 }
 
 h1 {
@@ -37,7 +45,6 @@ h1 {
     background: #333;
 }
 
-/* Ajuste correto para o JavaScript */
 .playerX {
     color: #79A7FF;
 }
@@ -66,10 +73,30 @@ button:hover {
     background: #666;
 }
 
-/* Opcional: mensagem de vitória */
 .announcer {
-    margin-top: 15px;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    background: #535353;
+    color: #fff;
+    text-align: center;
     font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 1000;
+    
+    /* Começa invisível */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: 0.4s ease;
+}
+
+/* Quando aparecer */
+.announcer.show {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .hide {
