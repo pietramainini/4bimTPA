@@ -5,33 +5,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jogo da Velha</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> <!-- Estilo -->
   <script src="script.js" defer></script>
 </head>
 
 <body>
+  <!-- Título principal -->
   <h1>Jogo da Velha</h1>
 
-  <!-- Mostra qual jogador deve jogar -->
-  <div class="display-player"></div>
-
-  <!-- Tabuleiro -->
+  <!-- Container do tabuleiro -->
   <div id="board">
+    <!-- 9 células que serão preenchidas pelo JS quando o jogador clicar -->
     <div class="cell"></div>
     <div class="cell"></div>
     <div class="cell"></div>
+
     <div class="cell"></div>
     <div class="cell"></div>
     <div class="cell"></div>
+
     <div class="cell"></div>
     <div class="cell"></div>
     <div class="cell"></div>
   </div>
 
-  <!-- Mensagem de vitória/empate -->
+  <!-- Área onde as mensagens aparecem: vencedor, velha, etc. A classe "hide" começa ocultando o elemento -->
   <div class="announcer hide"></div>
 
-  <!-- Botão do JS -->
+  <!-- Botão que chama o reset do JavaScript -->
   <button id="reset">Reiniciar</button>
 
 </body>
